@@ -13,3 +13,9 @@ export const store = configureStore({
 })
 
 export type RootState = ReturnType<typeof store.getState>
+
+document.onvisibilitychange = () => {
+  if (document.visibilityState == 'hidden') {
+    localStorage.setItem('likes', JSON.stringify(store.getState().auth.likes))
+  }
+}
