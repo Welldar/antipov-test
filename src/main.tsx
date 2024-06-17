@@ -1,15 +1,22 @@
 import ReactDOM from 'react-dom/client'
-import App from './components/App/App'
 import { Provider } from 'react-redux'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { User } from './components/User/User'
-import { store } from './components/App/store'
+import { store } from './components/Main/store'
+import { Main } from './components/Main/Main'
+import { App } from './components/App/App'
 
 const router = createBrowserRouter([
-  { path: '/', element: <App /> },
   {
-    path: 'users/:id',
-    element: <User />,
+    path: '',
+    element: <App />,
+    children: [
+      { path: '/', element: <Main /> },
+      {
+        path: 'users/:id',
+        element: <User />,
+      },
+    ],
   },
 ])
 

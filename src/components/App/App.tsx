@@ -1,23 +1,10 @@
-import './App.css'
-import { Header } from '../Header/Header'
-import { UsersList } from '../UsersList/UsersList'
+import { useSelector } from 'react-redux'
+import { RootState } from '../Main/store'
+import { Outlet } from 'react-router-dom'
+import { SignUp } from '../auth/SignUp'
 
-function App() {
-  return (
-    <>
-      <Header>
-        <div>
-          <h1>Наша команда</h1>
-          <p>
-            Это опытные специалисты, хорошо разбирающиеся во всех задачах,
-            которые ложатся на их плечи, и умеющие находить выход из любых, даже
-            самых сложных ситуаций.
-          </p>
-        </div>
-      </Header>
-      <UsersList />
-    </>
-  )
+export function App() {
+  const auth = useSelector((state: RootState) => state.auth.token)
+
+  return auth ? <Outlet /> : <SignUp />
 }
-
-export default App

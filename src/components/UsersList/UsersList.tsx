@@ -1,7 +1,7 @@
 import { UserCard } from '../UserCard/UserCard'
 import { setPage, useGetUsersByPageQuery } from './userListSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../App/store'
+import { RootState } from '../Main/store'
 
 export function UsersList() {
   const page = useSelector((state: RootState) => state.page)
