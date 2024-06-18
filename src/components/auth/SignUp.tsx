@@ -1,6 +1,15 @@
 import { useDispatch } from 'react-redux'
 import { signIn } from './signUpSlice'
-import { UseFormRegisterReturn, useController, useForm } from 'react-hook-form'
+import {
+  Control,
+  FieldValues,
+  FormProvider,
+  RegisterOptions,
+  UseControllerProps,
+  UseFormRegisterReturn,
+  useController,
+  useForm,
+} from 'react-hook-form'
 
 type FormData = {
   name: string
@@ -11,81 +20,76 @@ type FormData = {
 
 export function SignUp() {
   const dispatch = useDispatch()
-  const {
-    register,
-    handleSubmit,
-    watch,
-    trigger,
-    formState: { errors },
-  } = useForm<FormData>({ mode: 'onTouched' })
+  const methods = useForm<FormData>({
+    mode: 'all',
+  })
+  const { trigger, handleSubmit, getValues, getFieldState } = methods
 
   const onSubmit = (data: FormData) =>
     dispatch(signIn({ email: data.email, password: data.password }))
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Input
-        labelTxt="Имя"
-        error={errors.name?.message}
-        register={register('name')}
-      />
-      <Input
-        labelTxt="email"
-        error={errors.email?.message}
-        register={register('email', {
-          required: 'Необходимо указать email',
-          pattern: {
-            value: /^\S+@\S+$/i,
-            message: 'Введите корректный email',
-          },
-        })}
-      />
-      <Input
-        labelTxt="Пароль"
-        type="password"
-        error={errors.password?.message}
-        register={register('password', {
-          required: 'Необходимо указать пароль',
-          minLength: { value: 6, message: 'Минимальная длина 6 символов' },
-          onChange: () => trigger('confirmPassword'),
-        })}
-      />
-      <Input
-        labelTxt="Подтвердите пароль"
-        type="password"
-        error={errors.confirmPassword?.message}
-        register={register('confirmPassword', {
-          validate: (value) => {
-            if (watch('password') != value) {
-              return 'Пароли не совпадают'
-            }
-          },
-        })}
-      />
-
-      <button type="submit">Зарегистрироваться</button>
-    </form>
+    <FormProvider {...methods}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Input name="name" labelTxt="Имя" />
+        <Input
+          name="email"
+          labelTxt="email"
+          rules={{
+            required: 'Необходимо указать email',
+            pattern: {
+              value: /^\S+@\S+$/i,
+              message: 'Некорректный email',
+            },
+          }}
+        />
+        <Input
+          name="password"
+          labelTxt="Пароль"
+          type="password"
+          rules={{
+            required: 'Необходимо указать пароль',
+            minLength: { value: 6, message: 'Минимальная длина 6 символов' },
+            onChange: () => {
+              getFieldState('confirmPassword').isDirty &&
+                trigger('confirmPassword')
+            },
+          }}
+        />
+        <Input
+          name="confirmPassword"
+          labelTxt="Подтвердите пароль"
+          type="password"
+          rules={{
+            validate: (value) => {
+              if (getValues('password') != value) {
+                return 'Пароли не совпадают'
+              }
+            },
+          }}
+        />
+        <button type="submit">Зарегистрироваться</button>
+      </form>
+    </FormProvider>
   )
 }
 
 function Input({
+  name,
   labelTxt,
   type = 'text',
-  register,
-  error,
-}: {
-  labelTxt: string
-  type?: string
-  register: UseFormRegisterReturn
-  error: string | undefined
-}) {
-  // const {fieldState: {error}} = useController({name:'', rules: {}, })
+  rules,
+}: UseControllerProps<FormData> & { labelTxt: string; type?: string }) {
+  const {
+    field,
+    fieldState: { error },
+  } = useController({ name, rules, defaultValue: '' })
 
   return (
-    <label htmlFor={register.name}>
+    <label htmlFor={name}>
       <span>{labelTxt}</span>
-      <input id={register.name} type={type} {...register} />
-      <span>{error}</span>
+      <input id={name} type={type} {...field} />
+      <span>{error?.message}</span>
     </label>
   )
 }
