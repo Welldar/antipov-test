@@ -15,11 +15,11 @@ export function UsersList() {
   }
 
   return (
-    <div className="mx-auto max-w-screen-xl px-9">
-      <div className="mb-14 grid grid-cols-[repeat(auto-fit,_minmax(var(--card-size),1fr))] justify-items-center gap-5 [--card-size:305px]">
+    <div className="mx-auto max-w-[calc(1280px+36px*2)] px-9">
+      <div className="grid grid-cols-[repeat(auto-fit,_minmax(var(--card-size),1fr))] justify-items-center gap-5 [--card-size:305px]">
         {users}
       </div>
-      <div className="mx-auto mb-16 w-fit">
+      <div className="mx-auto my-8 w-fit sm:my-16">
         <Button
           clickHandler={() => {
             dispatch(setPage(page + 1))
