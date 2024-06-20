@@ -1,17 +1,9 @@
 import { useDispatch } from 'react-redux'
 import { signIn } from './signUpSlice'
-import {
-  Control,
-  FieldValues,
-  FormProvider,
-  RegisterOptions,
-  UseControllerProps,
-  UseFormRegisterReturn,
-  useController,
-  useForm,
-} from 'react-hook-form'
+import { FormProvider, useForm } from 'react-hook-form'
+import { Input, PasswordInput } from '../Input/Input'
 
-type FormData = {
+export type FormData = {
   name: string
   email: string
   password: string
@@ -30,11 +22,16 @@ export function SignUp() {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Input name="name" labelTxt="Имя" />
+      <form
+        className="mx-auto my-4 flex max-w-[500px] flex-col gap-4 rounded-2xl p-4 shadow-[0_4px_20px_rgba(0,0,0,0.08)]"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <h2 className="text-xl">Регистрация</h2>
+        <Input name="name" labelTxt="Имя" placeholder="Артур" />
         <Input
           name="email"
-          labelTxt="email"
+          labelTxt="Электронная почта"
+          placeholder="example@mail.ru"
           rules={{
             required: 'Необходимо указать email',
             pattern: {
@@ -43,9 +40,10 @@ export function SignUp() {
             },
           }}
         />
-        <Input
+        <PasswordInput
           name="password"
           labelTxt="Пароль"
+          placeholder="******"
           type="password"
           rules={{
             required: 'Необходимо указать пароль',
@@ -56,9 +54,10 @@ export function SignUp() {
             },
           }}
         />
-        <Input
+        <PasswordInput
           name="confirmPassword"
           labelTxt="Подтвердите пароль"
+          placeholder="******"
           type="password"
           rules={{
             validate: (value) => {
@@ -68,28 +67,13 @@ export function SignUp() {
             },
           }}
         />
-        <button type="submit">Зарегистрироваться</button>
+        <button
+          className="mt-2 rounded-lg bg-violet-900 px-3 py-2 text-white"
+          type="submit"
+        >
+          Зарегистрироваться
+        </button>
       </form>
     </FormProvider>
-  )
-}
-
-function Input({
-  name,
-  labelTxt,
-  type = 'text',
-  rules,
-}: UseControllerProps<FormData> & { labelTxt: string; type?: string }) {
-  const {
-    field,
-    fieldState: { error },
-  } = useController({ name, rules, defaultValue: '' })
-
-  return (
-    <label htmlFor={name}>
-      <span>{labelTxt}</span>
-      <input id={name} type={type} {...field} />
-      <span>{error?.message}</span>
-    </label>
   )
 }

@@ -6,5 +6,5 @@ export default {
   theme: {
     extend: { fontFamily: { sans: '"Roboto", sans-serif' } },
   },
-  plugins: [formPlugin],
+  plugins: [],
 } satisfies Config

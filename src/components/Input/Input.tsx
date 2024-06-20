@@ -25,9 +25,11 @@ export function Input({
   return (
     <label htmlFor={name}>
       <span className="block">{labelTxt}</span>
-      <div className="relative">
+      <div
+        className={`mb-1 mt-2 flex gap-2 rounded-lg border-none bg-gray-50 py-3 pl-4 pr-2 text-sm ring-red-500 ${error && 'ring-1'}`}
+      >
         <input
-          className={`mb-1 mt-2 block w-full rounded-lg border-none bg-gray-50 py-3 pl-4 pr-2 text-sm ring-red-500 ${error && 'ring-1'}`}
+          className="grow bg-inherit text-gray-600 outline-none autofill:shadow-[0_0_0_1000px_rgb(249,250,251)_inset]"
           id={name}
           type={type}
           placeholder={placeholder}
@@ -35,18 +37,22 @@ export function Input({
         />
         {children}
       </div>
-      <span className="block text-[10px] text-red-500">{error?.message}</span>
+      <span className="block min-h-[1.5em] text-[10px] text-red-500">
+        {error?.message}
+      </span>
     </label>
   )
 }
-function PasswordInput(props: InputProps) {
+export function PasswordInput(props: InputProps) {
   const [isOpened, setIsOpened] = useState(false)
 
   return (
-    <Input type={isOpened ? 'text' : 'password'} {...props}>
+    <Input {...props} type={isOpened ? 'text' : 'password'}>
       <div
-        onClick={() => setIsOpened(!isOpened)}
-        className="absolute right-0 top-0"
+        onClick={(e) => {
+          e.preventDefault()
+          setIsOpened(!isOpened)
+        }}
       >
         {isOpened ? <OpenedEye /> : <ClosedEye />}
       </div>

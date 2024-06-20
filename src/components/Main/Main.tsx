@@ -5,7 +5,7 @@ export function Main() {
   return (
     <>
       <Header>
-        <div>
+        <div className="">
           <h1>Наша команда</h1>
           <p>
             Это опытные специалисты, хорошо разбирающиеся во всех задачах,
