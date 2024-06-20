@@ -5,6 +5,7 @@ import { User } from './components/User/User'
 import { store } from './components/Main/store'
 import { Main } from './components/Main/Main'
 import { App } from './components/App/App'
+import './main.css'
 
 const router = createBrowserRouter([
   {
