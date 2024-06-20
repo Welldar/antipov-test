@@ -12,7 +12,7 @@ export function UserCard(props: User) {
   return (
     <Link
       to={`/users/${props.id}`}
-      className="flex w-[305px] flex-col items-center gap-4 rounded-[10px] px-5 pb-5 pt-9 shadow-md"
+      className="flex w-[--card-size] flex-col items-center gap-4 rounded-[10px] px-5 pb-5 pt-9 shadow-md"
     >
       <img src={props.avatar} alt="" className="size-32 rounded-full" />
       <span className="text-xl">{`${props.first_name} ${props.last_name}`}</span>
