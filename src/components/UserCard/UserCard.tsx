@@ -15,7 +15,7 @@ export function UserCard(props: User) {
       to={`/users/${props.id}`}
       className="flex w-[--card-size] flex-col items-center gap-4 rounded-[10px] px-5 pb-5 pt-9 shadow-md"
     >
-      <Avatar src={props.avatar} className="size-32" />
+      <Avatar src={props.avatar} className="aspect-square size-32" />
 
       <span className="text-xl">{`${props.first_name} ${props.last_name}`}</span>
       <button

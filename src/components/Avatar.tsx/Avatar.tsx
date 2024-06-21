@@ -7,7 +7,7 @@ export function Avatar({ src, className }: { src: string; className: string }) {
       <img
         src={src}
         onLoad={() => setIsLoading(false)}
-        className={`${isLoading && 'hidden'} rounded-full`}
+        className={`${isLoading && 'hidden'} aspect-square rounded-full object-cover`}
         alt=""
       />
       <div

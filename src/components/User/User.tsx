@@ -21,7 +21,7 @@ export function User() {
       <div>
         <Header
           leftColumn={
-            <Link to="/">
+            <Link to="/" preventScrollReset>
               <Button className="hidden border-zinc-50 text-zinc-50 sm:block">
                 Назад
               </Button>

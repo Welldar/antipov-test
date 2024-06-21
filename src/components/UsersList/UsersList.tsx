@@ -15,7 +15,7 @@ export function UsersList() {
   }
 
   return (
-    <div className="mx-auto max-w-[calc(1280px+36px*2)] px-9">
+    <div className="mx-auto max-w-screen-xl">
       <div className="grid grid-cols-[repeat(auto-fit,_minmax(var(--card-size),1fr))] justify-items-center gap-5 [--card-size:305px]">
         {users}
       </div>
