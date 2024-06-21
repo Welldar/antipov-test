@@ -5,6 +5,7 @@ import { Button } from '../Button/Button'
 import { Envelope } from '../Icons/Envelope'
 import { Mobile } from '../Icons/Mobile'
 import { ArrowLeft } from '../Icons/ArrowLeft'
+import { Avatar } from '../Avatar.tsx/Avatar'
 
 export function User() {
   const { id } = useParams()
@@ -29,11 +30,11 @@ export function User() {
           }
         >
           <div className="mb-16 flex flex-col items-center gap-4 md:mb-10 md:flex-row md:items-start md:gap-8">
-            <img
-              className="order-1 size-44 rounded-full md:order-none"
+            <Avatar
               src={user.avatar}
-              alt=""
+              className="order-1 aspect-square size-44 rounded-full md:order-none"
             />
+
             <div className="md: my-auto text-center md:text-left">
               <p className="mb-4 text-4xl md:text-6xl">{`${user.first_name} ${user.last_name}`}</p>
               <p className="text-xl md:text-3xl">Партнер</p>
