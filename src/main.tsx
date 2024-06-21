@@ -7,28 +7,32 @@ import { Main } from './components/Main/Main'
 import { App } from './components/App/App'
 import './main.css'
 
-const router = createBrowserRouter([
-  {
-    path: '',
-    element: <App />,
-    errorElement: (
-      <div className="mx-auto my-4 w-fit text-center text-5xl">
-        <h1 className="my-2 text-red-600">
-          Something went wrong. Probably hit limit rate reqres.in or incorrect
-          route
-        </h1>
-        <Link to={'/'}>Return home</Link>
-      </div>
-    ),
-    children: [
-      { path: '/', element: <Main /> },
-      {
-        path: 'users/:id',
-        element: <User />,
-      },
-    ],
-  },
-])
+const router = createBrowserRouter(
+  [
+    {
+      path: '',
+      element: <App />,
+      errorElement: (
+        <div className="mx-auto my-4 w-fit text-center text-5xl">
+          <h1 className="my-2 text-red-600">
+            Something went wrong. Probably hit limit rate reqres.in or incorrect
+            route
+          </h1>
+          <Link to={'/'}>Return home</Link>
+        </div>
+      ),
+
+      children: [
+        { path: '/', element: <Main /> },
+        {
+          path: 'users/:id',
+          element: <User />,
+        },
+      ],
+    },
+  ],
+  { basename: import.meta.env.DEV ? '/' : '/antipov-test/' }
+)
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <Provider store={store}>
