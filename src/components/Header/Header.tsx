@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux'
-import { signOut } from '../auth/signUpSlice'
+import { signOut } from '../SignUp/signUpSlice'
 import { Button } from '../Button/Button'
 import { Exit } from '../Icons/Exit'
 

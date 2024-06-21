@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { User } from '../UsersList/userListSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../Main/store'
-import { toggleLike } from '../auth/signUpSlice'
+import { toggleLike } from '../SignUp/signUpSlice'
 import { Like } from '../Icons/Like'
 import { Avatar } from '../Avatar.tsx/Avatar'
 

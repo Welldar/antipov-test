@@ -1,4 +1,4 @@
-import { FormData } from '../auth/SignUp'
+import { FormData } from '../SignUp/SignUp'
 import { useState } from 'react'
 import { UseControllerProps, useController } from 'react-hook-form'
 import { OpenedEye, ClosedEye } from '../Icons/Eye'
