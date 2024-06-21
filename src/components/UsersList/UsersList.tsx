@@ -6,11 +6,13 @@ import { Button } from '../Button/Button'
 import arrow from '../../assets/arrow-down.svg'
 
 export function UsersList() {
-  const page = useSelector((state: RootState) => state.page)
+  const { currentPage, isLastPage } = useSelector(
+    (state: RootState) => state.page
+  )
   const dispatch = useDispatch()
   const users = []
 
-  for (let i = 1; i <= page; i++) {
+  for (let i = 1; i <= currentPage; i++) {
     users.push(<UsersListHelper key={i} page={i} />)
   }
 
@@ -21,8 +23,9 @@ export function UsersList() {
       </div>
       <div className="mx-auto my-8 w-fit sm:my-16">
         <Button
+          className={`${isLastPage ? 'hidden' : ''}`}
           clickHandler={() => {
-            dispatch(setPage(page + 1))
+            dispatch(setPage(currentPage + 1))
           }}
         >
           <div className="flex gap-2">

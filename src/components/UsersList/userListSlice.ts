@@ -7,6 +7,11 @@ export const usersApi = createApi({
   endpoints: (builder) => ({
     getUsersByPage: builder.query<UsersPagedQueryResponse, number | string>({
       query: (page) => `?page=${page}`,
+      async onQueryStarted(_id, { dispatch, queryFulfilled }) {
+        const { data } = await queryFulfilled
+
+        dispatch(setIsLastPage(data.page == data.total_pages))
+      },
     }),
     getUserById: builder.query<UserResponse, number | string>({
       query: (id) => `/${id}`,
@@ -18,15 +23,20 @@ export const { useGetUsersByPageQuery, useGetUserByIdQuery } = usersApi
 
 export const pageNumberSlice = createSlice({
   name: 'currentPage',
-  initialState: 1,
+  initialState: { currentPage: 1, isLastPage: false },
   reducers: {
-    setPage: (_state, action: PayloadAction<number>) => {
-      return action.payload
+    setPage: (state, action: PayloadAction<number>) => {
+      state.currentPage = action.payload
+    },
+    setIsLastPage: (state, action: PayloadAction<boolean>) => {
+      state.isLastPage = action.payload
     },
   },
 })
 
 export const { setPage } = pageNumberSlice.actions
+
+const { setIsLastPage } = pageNumberSlice.actions
 
 export const pageReducer = pageNumberSlice.reducer
 
@@ -40,6 +50,8 @@ export type User = {
 
 type UsersPagedQueryResponse = {
   data: User[]
+  page: number
+  total_pages: number
 }
 
 type UserResponse = {
